@@ -8,6 +8,7 @@ crash.log
 
 # Secrets
 .env
+node_modules
 
 # SSH Keys
 *.pem
