@@ -284,7 +284,7 @@ This project demonstrates a full DevOps lifecycle from infrastructure provisioni
 
 **Author:** Chidera Alaeto  
 **Portfolio:** [GitHub](https://github.com/chideraalaeto)  
-**Contact:** chideraalaeto92@gmail.com.com
+**Contact:** chideraalaeto92@gmail.com
 
 
 
