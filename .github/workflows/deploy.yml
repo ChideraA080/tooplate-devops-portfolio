@@ -30,18 +30,28 @@ jobs:
           chmod 600 key.pem
 
           ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.EC2_HOST }} << EOF
-            sudo apt update -y
-            sudo apt install docker.io -y
-            sudo systemctl start docker
-            sudo systemctl enable docker
 
+            # Ensure Docker is running
+            sudo systemctl is-active --quiet docker || sudo systemctl start docker
+
+            # Pull latest Docker image
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/tooplate_site:v${{ github.run_number }}
 
+            # Stop and remove old container
             sudo docker stop tooplate_site || true
             sudo docker rm tooplate_site || true
 
-            sudo docker run -d -p 8081:80 -p 443:443 \
+            # Stop and remove any container using port 8081 (safety)
+            sudo docker ps -q --filter "publish=8081" | xargs -r sudo docker stop
+            sudo docker ps -aq --filter "publish=8081" | xargs -r sudo docker rm
+
+            # Run the new container
+            sudo docker run -d -p 8081:80 \
               --name tooplate_site \
               --restart always \
               ${{ secrets.DOCKER_USERNAME }}/tooplate_site:v${{ github.run_number }}
+
+            # Print port mapping for confirmation
+            sudo docker port tooplate_site
+
           EOF
