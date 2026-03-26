@@ -7,6 +7,7 @@ Static website CI/CD deployment with Docker, Terraform, and AWS EC2.
 
 This project demonstrates a full DevOps workflow for deploying a static website downloaded from [Tooplate](https://www.tooplate.com/), using modern cloud and containerization technologies. The workflow includes:
 
+- Downloading and preparing a static website template
 - Provisioning infrastructure on AWS EC2 using Terraform
 - Containerizing the website using Docker
 - Automating the build, push, and deployment process via GitHub Actions CI/CD
@@ -71,6 +72,11 @@ git clone https://github.com/
 <your-username>/<repo-name>.git
 cd <repo-name>
 
+## Step 1: Download and Prepare Tooplate Template
+
+1. Go to https://www.tooplate.com/
+2. Download any free HTML template (ZIP file)
+
 ### 2. Prepare Website Files
 
 1. Create a folder `site` in your project root:
@@ -83,13 +89,38 @@ mkdir site
 > Screenshot idea: Show `site` folder with Tooplate files inside.
 
 
+4. Unzip the downloaded template:
+
+unzip tooplate-xxx.zip
+
+
+5. Copy the extracted files into the `site` directory:
+
+cp -r tooplate-xxx/* site/
+
+
+OR (if already extracted manually):
+
+cp -r <downloaded-folder>/* site/
+
+6. Confirm files are inside:
+
+ls site
+
+You should see:
+
+- index.html
+
+- css/
+
+- js/
+
+- images/
+
+
 ### 3. Create Dockerfile
 
 Create a `Dockerfile` in the project root:
-
-2. Download your Tooplate template and copy the content into the `site` folder.
-
-> Screenshot idea: Show `site` folder with Tooplate files inside.
 
 Dockerfile for Tooplate site
 
@@ -170,6 +201,10 @@ Use Personal Access Token (PAT) as password if prompted
 
 ### 5. CI/CD Pipeline via GitHub Actions
 
+Create file:
+
+.github/workflows/deploy.yml
+
 The `.github/workflows/deploy.yml` workflow:
 
 - Checks out the repository
@@ -180,6 +215,14 @@ The `.github/workflows/deploy.yml` workflow:
 #### Key Steps:
 
 1. Add your **secrets** to GitHub repository:
+
+## Step 7: GitHub Secrets Configuration
+
+Go to:
+
+Settings → Secrets → Actions
+
+Add:
 
 - `DOCKER_USERNAME`
 - `DOCKER_PASSWORD` (PAT)
@@ -268,13 +311,18 @@ http://<EC2_PUBLIC_IP>:Port
 
 ## How to Replicate
 
-1. Clone the repo
+1. Clone the repository
 2. Set AWS credentials and key pair
-3. Run Terraform
-4. Build and push Docker image
-5. Configure GitHub secrets
-6. Push to `main` to trigger CI/CD
-7. Access website via EC2 public IP
+3. Create `site` folder
+4. Copy Tooplate template into `site`
+5. Create Dockerfile
+6. Build Docker image
+7. Push to DockerHub
+8. Provision EC2 using Terraform
+9. Add GitHub Secrets
+10. Add GitHub Actions workflow
+11. Push to `main` to trigger CI/CD
+12. Access website via EC2 public IP
 
 
 ## Conclusion
