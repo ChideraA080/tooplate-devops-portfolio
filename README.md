@@ -88,12 +88,12 @@ mkdir site
 > Screenshot idea: Show `site` folder with Tooplate files inside.
 
 
-4. Unzip the downloaded template:
+3. Unzip the downloaded template:
 
 unzip tooplate-xxx.zip
 
 
-5. Copy the extracted files into the `site` directory:
+4. Copy the extracted files into the `site` directory:
 
 cp -r tooplate-xxx/* site/
 
@@ -102,7 +102,7 @@ OR (if already extracted manually):
 
 cp -r <downloaded-folder>/* site/
 
-6. Confirm files are inside:
+5. Confirm files are inside:
 
 ls site
 
@@ -135,7 +135,7 @@ RUN echo "OK" >  /usr/share/nginx/html/health.txt
 
 CMD ["nginx", "-g", "daemon off;"]
 
-### 2. Terraform Infrastructure
+### Step 4. Terraform Infrastructure
 
 Terraform is used to provision the EC2 instance and security group.
 
@@ -160,13 +160,12 @@ type = string
 cd terraform
 terraform init
 
-
 4. Apply Terraform configuration:
 terraform apply --auto-approve
 
 > Screenshot idea: Capture `terraform apply` output with instance IP.
 
-### Step 3. Dockerize Tooplate Site
+### Step 5. Dockerize Tooplate Site
 
 1. Download your Tooplate template and place it in the project root.
 
@@ -177,13 +176,12 @@ docker build -t <your-dockerhub-username>/tooplate_site:v1.0 .
 3. Test the container:
 docker run -d -p 8081:80 --name tooplate_site <your-dockerhub-username>/tooplate_site:v1.0
 
-
 4. Open your browser and navigate to `http://localhost:8081` to verify.
 
 > Screenshot idea: Show website running locally in browser.
 
 
-### Step 4. Push Docker Image to DockerHub
+### Step 6. Push Docker Image to DockerHub
 
 docker login -u <your-dockerhub-username>
 
@@ -193,12 +191,9 @@ docker push <your-dockerhub-username>/tooplate_site:v1.0
 
 Use Personal Access Token (PAT) as password if prompted
 
-
 > Screenshot idea: Show DockerHub repository with the pushed image.
 
----
-
-### Step 5. CI/CD Pipeline via GitHub Actions
+### Step 7. CI/CD Pipeline via GitHub Actions
 
 Create file:
 
@@ -215,7 +210,7 @@ The `.github/workflows/deploy.yml` workflow:
 
 1. Add your **secrets** to GitHub repository:
 
-### Step 6. : GitHub Secrets Configuration
+#####. : GitHub Secrets Configuration
 
 Go to:
 
@@ -232,9 +227,7 @@ Add:
 
 > Screenshot idea: Show GitHub Actions build logs successful run.
 
----
-
-### Step 7. EC2 Deployment & Testing
+### Step 8. EC2 Deployment & Testing
 
 Connect to EC2:
 
@@ -260,7 +253,6 @@ ssh -i <your-key.pem> ubuntu@<EC2_PUBLIC_IP>
  
 Open browser and navigate to:
 http://<EC2_PUBLIC_IP>:Port 
-
 
 > Screenshot idea: Live site on EC2 with browser screenshot.
 
