@@ -16,7 +16,6 @@ This project demonstrates a full DevOps workflow for deploying a static website 
 
 This project is part of my DevOps portfolio, showcasing hands-on experience with cloud infrastructure, automation, and containerization.
 
-
 ## Features
 
 - Automated Docker image build and push to DockerHub
@@ -39,6 +38,7 @@ This project is part of my DevOps portfolio, showcasing hands-on experience with
 
 
 ## Project Structure
+
 project-root/
 │
 
@@ -66,23 +66,22 @@ project-root/
 
 ## Project Setup & Steps
 
-### 1. Clone the Repository
+###  Clone the Repository
 
 git clone https://github.com/
 <your-username>/<repo-name>.git
 cd <repo-name>
 
-## Step 1: Download and Prepare Tooplate Template
+### Step 1: Download and Prepare Tooplate Template
 
 1. Go to https://www.tooplate.com/
 2. Download any free HTML template (ZIP file)
 
-### 2. Prepare Website Files
+### Step 2. Prepare Website Files
 
 1. Create a folder `site` in your project root:
 
 mkdir site
-
 
 2. Download your Tooplate template and copy the content into the `site` folder.
 
@@ -118,7 +117,7 @@ You should see:
 - images/
 
 
-### 3. Create Dockerfile
+### Step 3. Create Dockerfile
 
 Create a `Dockerfile` in the project root:
 
@@ -167,7 +166,7 @@ terraform apply --auto-approve
 
 > Screenshot idea: Capture `terraform apply` output with instance IP.
 
-### 3. Dockerize Tooplate Site
+### Step 3. Dockerize Tooplate Site
 
 1. Download your Tooplate template and place it in the project root.
 
@@ -184,7 +183,7 @@ docker run -d -p 8081:80 --name tooplate_site <your-dockerhub-username>/tooplate
 > Screenshot idea: Show website running locally in browser.
 
 
-### 4. Push Docker Image to DockerHub
+### Step 4. Push Docker Image to DockerHub
 
 docker login -u <your-dockerhub-username>
 
@@ -199,7 +198,7 @@ Use Personal Access Token (PAT) as password if prompted
 
 ---
 
-### 5. CI/CD Pipeline via GitHub Actions
+### Step 5. CI/CD Pipeline via GitHub Actions
 
 Create file:
 
@@ -216,7 +215,7 @@ The `.github/workflows/deploy.yml` workflow:
 
 1. Add your **secrets** to GitHub repository:
 
-## Step 7: GitHub Secrets Configuration
+### Step 6. : GitHub Secrets Configuration
 
 Go to:
 
@@ -235,7 +234,7 @@ Add:
 
 ---
 
-### 6. EC2 Deployment & Testing
+### Step 7. EC2 Deployment & Testing
 
 Connect to EC2:
 
@@ -258,15 +257,12 @@ ssh -i <your-key.pem> ubuntu@<EC2_PUBLIC_IP>
 
 - Verify Docker container:
   sudo docker ps
-
-  
+ 
 Open browser and navigate to:
 http://<EC2_PUBLIC_IP>:Port 
 
 
 > Screenshot idea: Live site on EC2 with browser screenshot.
-
----
 
 ## Challenges Faced & Solutions
 
@@ -276,18 +272,18 @@ http://<EC2_PUBLIC_IP>:Port
 | Port conflicts on EC2 (`Bind for 0.0.0.0:80 failed`) | Stopped existing containers using port 80 (`docker stop` & `docker rm`) before deploying new container |
 | Sensitive keys exposed | Stored all secrets in GitHub repository secrets and used environment variables in workflows |
 | SSH access errors from GitHub Actions | Used `chmod 600` for key and `StrictHostKeyChecking=no` for non-interactive SSH |
-
----
+| Template not loading | Fixed by correctly copying files into `site/` |
+| Wrong file structure | Ensured `index.html` is at root of `site/` |
 
 ## Lessons Learned
 
+- Importance of correct file structure in static deployments
+- How Docker serves static files via Nginx
 - Understanding Docker image tagging and naming conventions
 - Automating deployment with GitHub Actions
 - Managing AWS EC2 networking and ports
 - Best practices for storing secrets securely
 - Applying Terraform for Infrastructure as Code
-
----
 
 ## Screenshots / Proof of Work
 
@@ -307,22 +303,23 @@ http://<EC2_PUBLIC_IP>:Port
 
 `./screenshots/ec2_site.png`
 
----
 
 ## How to Replicate
 
 1. Clone the repository
 2. Set AWS credentials and key pair
-3. Create `site` folder
-4. Copy Tooplate template into `site`
-5. Create Dockerfile
-6. Build Docker image
-7. Push to DockerHub
-8. Provision EC2 using Terraform
-9. Add GitHub Secrets
-10. Add GitHub Actions workflow
-11. Push to `main` to trigger CI/CD
-12. Access website via EC2 public IP
+3. Download template from Tooplate
+4. Create `site` folder
+5. Unzip Tooplate template
+6. Copy Tooplate template into `site`
+7. Create Dockerfile
+8. Build Docker image
+9. Push to DockerHub
+10. Provision EC2 using Terraform
+11. Add GitHub Secrets
+12. Add GitHub Actions workflow
+13. Push to `main` to trigger CI/CD
+14. Access website via EC2 public IP
 
 
 ## Conclusion
@@ -331,7 +328,7 @@ This project demonstrates a full DevOps lifecycle from infrastructure provisioni
 
 
 **Author:** Chidera Alaeto  
-**Portfolio:** [GitHub](https://github.com/chideraalaeto)  
+**Portfolio:** [GitHub](https://github.com/ChideraA080/tooplate-devops-portfolio)  
 **Contact:** chideraalaeto92@gmail.com
 
 
