@@ -1,7 +1,9 @@
 # Tooplate Site Deployment - DevOps Portfolio Project
 
 Static website CI/CD deployment with Docker, Terraform, and AWS EC2.
-![Project Screenshot](./screenshots/homepage.png)
+
+ Project _workflow
+![ Screenshot of Project Workflow](https://github.com/ChideraA080/tooplate-devops-portfolio/blob/main/Tooplate_site%20Project/DevOps%20workflow%20for%20Tooplate%20deployment.png)
 
 ## Overview
 
@@ -85,9 +87,6 @@ mkdir site
 
 2. Download your Tooplate template and copy the content into the `site` folder.
 
-> Screenshot idea: Show `site` folder with Tooplate files inside.
-
-
 3. Unzip the downloaded template:
 
 unzip tooplate-xxx.zip
@@ -163,7 +162,8 @@ terraform init
 4. Apply Terraform configuration:
 terraform apply --auto-approve
 
-> Screenshot idea: Capture `terraform apply` output with instance IP.
+ Terraform _apply output with instance IP
+![ Screenshot of Terraform_apply](https://github.com/ChideraA080/tooplate-devops-portfolio/blob/main/Tooplate_site%20Project/1000724760.jpg)
 
 ### Step 5. Dockerize Tooplate Site
 
@@ -178,8 +178,8 @@ docker run -d -p 8081:80 --name tooplate_site <your-dockerhub-username>/tooplate
 
 4. Open your browser and navigate to `http://localhost:8081` to verify.
 
-> Screenshot idea: Show website running locally in browser.
-
+ Website Running locally in browser
+![ Screenshot of website running locally](https://github.com/ChideraA080/tooplate-devops-portfolio/blob/main/Tooplate_site%20Project/1000724765.jpg)
 
 ### Step 6. Push Docker Image to DockerHub
 
@@ -190,6 +190,10 @@ Use Personal Access Token (PAT) as password if prompted
 docker push <your-dockerhub-username>/tooplate_site:v1.0
 
 Use Personal Access Token (PAT) as password if prompted
+
+ Docker Image Push to Dockerhub
+![ Screenshot of Image in Dockerhub](https://github.com/ChideraA080/tooplate-devops-portfolio/blob/main/Tooplate_site%20Project/1000724783.jpg)
+
 
 > Screenshot idea: Show DockerHub repository with the pushed image.
 
@@ -210,7 +214,7 @@ The `.github/workflows/deploy.yml` workflow:
 
 1. Add your **secrets** to GitHub repository:
 
-#####. : GitHub Secrets Configuration
+  GitHub Secrets Configuration
 
 Go to:
 
@@ -225,7 +229,7 @@ Add:
 
 2. Push changes to `main` branch to trigger CI/CD.
 
-> Screenshot idea: Show GitHub Actions build logs successful run.
+![CI/CD Workflow Success](https://github.com/ChideraA080/tooplate-devops-portfolio/blob/main/Tooplate_site%20Project/1000724647.jpg)
 
 ### Step 8. EC2 Deployment & Testing
 
@@ -250,11 +254,14 @@ ssh -i <your-key.pem> ubuntu@<EC2_PUBLIC_IP>
 
 - Verify Docker container:
   sudo docker ps
+
+- Add Port 8081 in EC2 Security Inbound rule
  
 Open browser and navigate to:
 http://<EC2_PUBLIC_IP>:Port 
 
-> Screenshot idea: Live site on EC2 with browser screenshot.
+ Website Running Live on EC2 via browser
+![ Screenshot of website live on EC2](https://github.com/ChideraA080/tooplate-devops-portfolio/blob/main/Tooplate_site%20Project/1000724764.jpg)
 
 ## Challenges Faced & Solutions
 
@@ -269,31 +276,77 @@ http://<EC2_PUBLIC_IP>:Port
 
 ## Lessons Learned
 
-- Importance of correct file structure in static deployments
-- How Docker serves static files via Nginx
-- Understanding Docker image tagging and naming conventions
-- Automating deployment with GitHub Actions
-- Managing AWS EC2 networking and ports
-- Best practices for storing secrets securely
-- Applying Terraform for Infrastructure as Code
+- Learned proper file structuring for static website deployments
+- Understood how Nginx serves static content in Docker containers
+- Gained hands-on experience with Docker image building, tagging, and deployment
+- Implemented CI/CD automation using GitHub Actions
+- Managed AWS EC2 networking, security groups, and port configurations
+- Applied best practices for handling secrets securely
+- Used Terraform for Infrastructure as Code and resource provisioning
+- Practiced cost optimization by destroying unused resources
+- Improved troubleshooting skills (SSH errors, port conflicts, Docker issues)
+
+## Cost Optimization & Resource Management (Best Practice)
+
+One key DevOps practice I implemented in this project is **cost control and resource cleanup on AWS**.
+
+After testing and validating the deployment, I used Terraform to destroy provisioned infrastructure:
+
+## Terraform destroy
+
+#### Why this is important:
+
+- Prevents unnecessary AWS charges from running EC2 instances
+- Ensures infrastructure is only active when needed (on-demand usage)
+- Demonstrates responsible cloud resource management
+- Aligns with real-world DevOps practices in production environments
+
+#### What I learned from this:
+
+- Cloud resources are billed per usage, so leaving them running increases cost
+- Infrastructure as Code (Terraform) makes it easy to both **provision and tear down** environments
+- Clean-up is as important as deployment in a DevOps lifecycle
+- Practicing this habit is critical for working in real production systems
+
+
+## Best Practices Applied
+
+- No hardcoding of sensitive credentials (used GitHub Secrets)
+- Used Infrastructure as Code (Terraform) for reproducibility
+- Implemented CI/CD for automated deployment
+- Ensured proper container lifecycle management (stop/remove before redeploy)
+- Practiced cost optimization using `terraform destroy`
 
 ## Screenshots / Proof of Work
 
-1. Terraform EC2 provisioning:
+1. Health Status Confirmation 
+![ Screenshot Of terraform_destroy on EC2](https://github.com/ChideraA080/tooplate-devops-portfolio/blob/main/Tooplate_site%20Project/1774452268671.jpg)
 
-`./screenshots/terraform_apply.png`
+1.Terraform _apply
+![ Screenshot of Terraform_apply](https://github.com/ChideraA080/tooplate-devops-portfolio/blob/main/Tooplate_site%20Project/1000724760.jpg)
 
-2. Docker image build & push:
+2. Terraform EC2 provisioning:
+![ Screenshot of Instance running](https://github.com/ChideraA080/tooplate-devops-portfolio/blob/main/Tooplate_site%20Project/1000724771.jpg)
 
-`./screenshots/docker_build.png`
+3. Docker image build & push:
+![ Screenshot of docker_build](https://github.com/ChideraA080/tooplate-devops-portfolio/blob/main/Tooplate_site%20Project/1000724782.jpg)
 
-3. GitHub Actions CI/CD workflow success:
+4. Docker Image Push to Dockerhub
+![ Screenshot of Image in Dockerhub](https://github.com/ChideraA080/tooplate-devops-portfolio/blob/main/Tooplate_site%20Project/1000724783.jpg)
 
-`./screenshots/github_actions.png`
+5. GitHub Actions CI/CD workflow success:
 
-4. Live website running on EC2:
+![CI/CD Workflow Success](https://github.com/ChideraA080/tooplate-devops-portfolio/blob/main/Tooplate_site%20Project/1000724647.jpg)
 
-`./screenshots/ec2_site.png`
+
+6. Live website running on EC2:
+![ Screenshot Of EC2_site](https://github.com/ChideraA080/tooplate-devops-portfolio/blob/main/Tooplate_site%20Project/1000724764.jpg)
+
+7. Terraform Destroy
+![ Screenshot Of terraform destroy](https://github.com/ChideraA080/tooplate-devops-portfolio/blob/main/Tooplate_site%20Project/1774452359318.jpg)
+
+8. Terraform Destroy Confirmaion on Ec2
+![ Screenshot Of terraform_destroy on EC2](https://github.com/ChideraA080/tooplate-devops-portfolio/blob/main/Tooplate_site%20Project/1774452469999.jpg)
 
 
 ## How to Replicate
@@ -316,10 +369,11 @@ http://<EC2_PUBLIC_IP>:Port
 
 ## Conclusion
 
-This project demonstrates a full DevOps lifecycle from infrastructure provisioning, containerization, to CI/CD deployment. It highlights problem-solving, automation, and best practices for deploying production-ready applications securely.
+This project demonstrates my ability to execute a complete DevOps workflow - provisioning infrastructure with Terraform, containerizing applications with Docker, and automating deployments using GitHub Actions on AWS EC2.
 
+It reflects strong hands-on experience in building scalable, secure, and cost-efficient systems, while applying best practices in automation, cloud infrastructure, and real-world troubleshooting.
 
-**Author:** Chidera Alaeto  
+**Author:** Chidera Pamela Alaeto  
 **Portfolio:** [GitHub](https://github.com/ChideraA080/tooplate-devops-portfolio)  
 **Contact:** chideraalaeto92@gmail.com
 
