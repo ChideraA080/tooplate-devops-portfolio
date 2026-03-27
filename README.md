@@ -195,8 +195,6 @@ Use Personal Access Token (PAT) as password if prompted
 ![ Screenshot of Image in Dockerhub](https://github.com/ChideraA080/tooplate-devops-portfolio/blob/main/Tooplate_site%20Project/1000724783.jpg)
 
 
-> Screenshot idea: Show DockerHub repository with the pushed image.
-
 ### Step 7. CI/CD Pipeline via GitHub Actions
 
 Create file:
